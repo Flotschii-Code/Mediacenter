@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Center</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 4rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 1400px;
+      width: 100%;
+    }
+
+    .tile {
+      background: #141414;
+      border-radius: 1.25rem;
+      aspect-ratio: 16/10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      text-decoration: none;
+      border: 4px solid transparent;
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .tile:hover {
+      transform: scale(1.05);
+      background: #1f1f1f;
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .tile:focus {
+      outline: none;
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .tile:active {
+      transform: scale(0.98);
+    }
+
+    .tile img {
+      width: 12rem;
+      height: 4rem;
+      object-fit: contain;
+    }
+
+    .tile span {
+      color: white;
+      font-size: 1.875rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <!-- Netflix -->
+    <a href="https://netflix.com" target="_blank" class="tile">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix"/>
+      <span>Netflix</span>
+    </a>
+
+    <!-- YouTube -->
+    <a href="https://youtube.com" target="_blank" class="tile">
+      <img src="https://cdn.worldvectorlogo.com/logos/youtube-icon-5.svg" alt="YouTube"/>
+      <span>YouTube</span>
+    </a>
+  </div>
+</body>
+</html>
