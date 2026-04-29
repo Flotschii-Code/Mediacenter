@@ -1,178 +1,45 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Media Center</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #1f1f1f;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      padding: 4rem;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      max-width: 1400px;
-      width: 100%;
-    }
-    .tile {
-      background: #1f1f1f;
-      border-radius: 1.25rem;
-      aspect-ratio: 16/10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      text-decoration: none;
-      border: 4px solid transparent;
-      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-      cursor: pointer;
-    }
-    .tile:hover {
-      transform: scale(1.05);
-      background: #292929;
-      border-color: rgba(255,255,255,0.2);
-    }
-    .tile:focus {
-      outline: none;
-      border-color: rgba(255,255,255,0.4);
-    }
-    .tile:active {
-      transform: scale(0.98);
-    }
-    .tile img {
-      width: 24rem;
-      height: 8rem;
-      object-fit: contain;
-    }
-    .tile span {
-      color: white;
-      font-size: 1.875rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
+#!/bin/bash
 
-    /* Shutdown Button */
-    .shutdown-btn {
-      position: fixed;
-      bottom: 30px;
-      left: 30px;
-      background: rgba(255,255,255,0.08);
-      color: white;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.15);
-      font-size: 1.5rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease, border-color 0.2s ease;
-    }
-    .shutdown-btn:hover {
-      background: rgba(255,60,60,0.3);
-      border-color: rgba(255,60,60,0.5);
-    }
+echo "=== Media Center Setup ==="
+echo ""
 
-    /* Confirm Dialog */
-    .confirm-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-    }
-    .confirm-overlay.visible {
-      display: flex;
-    }
-    .confirm-box {
-      background: #2a2a2a;
-      border-radius: 1.25rem;
-      padding: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-      border: 2px solid rgba(255,255,255,0.1);
-    }
-    .confirm-box p {
-      color: white;
-      font-size: 1.3rem;
-    }
-    .confirm-buttons {
-      display: flex;
-      gap: 1rem;
-    }
-    .btn-cancel {
-      padding: 0.75rem 2rem;
-      border-radius: 0.75rem;
-      border: 2px solid rgba(255,255,255,0.2);
-      background: transparent;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    .btn-confirm {
-      padding: 0.75rem 2rem;
-      border-radius: 0.75rem;
-      border: none;
-      background: rgba(255,60,60,0.7);
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    .btn-cancel:hover { background: rgba(255,255,255,0.1); }
-    .btn-confirm:hover { background: rgba(255,60,60,0.9); }
-  </style>
-</head>
-<body>
-  <div class="grid">
-    <!-- Netflix -->
-    <a href="https://netflix.com" target="_blank" class="tile">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix"/>
-      <span>Netflix</span>
-    </a>
-    <!-- YouTube -->
-    <a href="https://youtube.com" target="_blank" class="tile">
-      <img src="https://cdn.worldvectorlogo.com/logos/youtube-icon-5.svg" alt="YouTube"/>
-      <span>YouTube</span>
-    </a>
-    <!-- ServusTV -->
-    <a href="https://www.servustv.com" target="_blank" class="tile">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/ServusTV_Logo.svg" alt="ServusTV"/>
-      <span>ServusTV</span>
-    </a>
-    <!-- Twitch -->
-    <a href="https://www.twitch.tv" target="_blank" class="tile">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Twitch_Glitch_Logo_Purple.svg" alt="Twitch"/>
-      <span>Twitch</span>
-    </a>
-  </div>
+# Flask installieren
+echo "[1/2] Installiere Flask..."
+pip3 install flask --break-system-packages
+echo "✓ Flask installiert"
+echo ""
 
-  <!-- Shutdown Button -->
-  <button class="shutdown-btn" onclick="document.getElementById('confirmDialog').classList.add('visible')">⏻</button>
+# Sudo Shutdown ohne Passwort
+echo "[2/2] Konfiguriere sudo für Shutdown..."
+echo "$USER ALL=(ALL) NOPASSWD: /sbin/shutdown" | sudo tee -a /etc/sudoers > /dev/null
+echo "✓ Sudo Shutdown konfiguriert"
+echo ""
 
-  <!-- Confirm Dialog -->
-  <div class="confirm-overlay" id="confirmDialog">
-    <div class="confirm-box">
-      <p>PC wirklich ausschalten?</p>
-      <div class="confirm-buttons">
-        <button class="btn-cancel" onclick="document.getElementById('confirmDialog').classList.remove('visible')">Abbrechen</button>
-        <button class="btn-confirm" onclick="fetch('http://localhost:5000/shutdown')">Ausschalten</button>
-      </div>
-    </div>
-  </div>
+# Autostart für Shutdown Server
+echo "[3/3] Richte Autostart ein..."
+mkdir -p ~/.config/autostart
 
-</body>
-</html>
+cat > ~/.config/autostart/mediacenter-shutdown.desktop << EOF
+[Desktop Entry]
+Type=Application
+Name=Mediacenter Shutdown Server
+Exec=python3 $(pwd)/shutdown_server.py
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+EOF
+
+cat > ~/.config/autostart/mediacenter-chrome.desktop << EOF
+[Desktop Entry]
+Type=Application
+Name=Mediacenter Chrome
+Exec=bash -c "sleep 5 && google-chrome --kiosk --noerrdialogs --disable-infobars --password-store=basic file://$(pwd)/index.html"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+EOF
+
+echo "✓ Autostart konfiguriert"
+
+
+echo "=== Setup abgeschlossen! ==="
