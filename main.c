@@ -50,11 +50,24 @@ int main(int argc, char *argv[]){
 
         if(counter == 0){
             printf("Use ./mediacenter --enable [Name] to enable services!\n");
-        }
+        }   
 
         sqlite3_finalize(stmt);
 
-    } else if(argc == 3 && strcmp(argv[1], "--enable") == 0){       //enable service from databank
+    } else if(argc == 2 && strcmp(argv[1], "--update") == 0){
+
+        write_json_file(db);
+
+    } else if(argc == 2 && strcmp(argv[1], "--start") == 0){
+        
+        write_json_file(db);
+
+        printf("starting the server on http://localhost:8080 ...\n");
+        printf("to end the server press ctrl + c\n\n");
+
+        system("xdg-terminal \"python3 -m http.server 8080\" &");
+
+    }else if(argc == 3 && strcmp(argv[1], "--enable") == 0){       //enable service from databank
         sqlite3_stmt *stmt;
 
         const char *sql_enable = "UPDATE services SET is_active = 1 WHERE name = ?;";

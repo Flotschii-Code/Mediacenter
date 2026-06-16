@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mein Media Center</title>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <style>
+        /* Dunkles, augenschonendes Streaming-Design für den Hintergrund */
+        body {
+            background-color: #141414;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            padding: 40px;
+            margin: 0;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2rem;
+        }
+        
+        /* Das automatische Raster für deine Kacheln */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        /* Die Kachel als Klick-Element */
+        .kachel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        /* Kleiner Pop-Effekt beim Drüberfahren */
+        .kachel:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Das große, abgerundete Quadrat aus deinem Screenshot */
+        .logo-box {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* Macht die Box immer perfekt quadratisch */
+            background-color: #2a2a2a; /* Schickes Dunkelgrau passend zum Darkmode */
+            border-radius: 45px; /* Die extrem runden Ecken aus deinem Webflow-Entwurf */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+        
+        /* Sorgt dafür, dass das Logo die Box sauber ausfüllt */
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Der blaue Text-Link unter dem Quadrat */
+        .kachel-text {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #3894ff; /* Das originale Webflow-Blau aus deinem Screenshot */
+            text-align: center;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        
+        .kachel:hover .kachel-text {
+            color: #6cb1ff; /* Wird beim Hovern leicht heller */
+        }
+    </style>
+</head>
+<body>
+
+    <h1> Mein Media Center</h1>
+
+    <div x-data="{ services: [] }" x-init="services = await (await fetch('services.json')).json()" class="grid-container">
+        
+        <template x-for="service in services">
+            <a :href="service.url" target="_blank" class="kachel">
+                
+                <div class="logo-box">
+                    <img :src="service.logo && service.logo.trim() !== '' ? service.logo : 'https://via.placeholder.com/200/2a2a2a/ffffff?text=%F0%9F%93%BA'" :alt="service.name">
+                </div>
+                
+                <div class="kachel-text" x-text="service.name">Platzhalter</div>
+                
+            </a>
+        </template>
+
+    </div>
+
+</body>
+</html>
