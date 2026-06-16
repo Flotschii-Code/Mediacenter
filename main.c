@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
         printf("starting the server on http://localhost:8080 ...\n");
         printf("to end the server press ctrl + c\n\n");
 
-        system("xdg-terminal \"python3 -m http.server 8080\" &");
+        system("konsole -e python3 -m http.server 8080 &");
 
     }else if(argc == 3 && strcmp(argv[1], "--enable") == 0){       //enable service from databank
         sqlite3_stmt *stmt;
@@ -99,6 +99,14 @@ int main(int argc, char *argv[]){
             return 1;
         }
 
+        char formatted_url[512];
+
+        if(strncmp(argv[4], "https://", 7) || strncmp(argv[4], "https://", 8)){
+            snprintf(formatted_url, sizeof(formatted_url), "%s", argv[4]);
+        } else {
+            snprintf(formatted_url, sizeof(formatted_url), "https://%s", argv[4]);
+        }
+
         sqlite3_bind_text(stmt, 1, argv[2], -1, SQLITE_STATIC); //Name
         sqlite3_bind_text(stmt, 2, argv[3], -1, SQLITE_STATIC); //URL
         sqlite3_bind_text(stmt, 3, argv[4], -1, SQLITE_STATIC); //Logo-Path
@@ -115,8 +123,10 @@ int main(int argc, char *argv[]){
     } else{
         printf("--Command not found--\n\n");
         printf("mediacenter --add [Name] [URL] [Logo]   //create and use a new service of your own\n");
-        printf("mediacenter --enable [Name]    //use a service from the databank\n");
+        printf("mediacenter --enable [Name] //use a service from the databank\n");
         printf("mediacenter --services  //view your used services");
+        printf("mediacenter --update    //update the services.json");
+        printf("mediacenter --start //start the localhost mediacenter server with port 8080 and update the services.json");
 
         sqlite3_close(db);
         return 1;
