@@ -56,6 +56,8 @@ mediacenter --start
 
 There are allready 66 services avialible by default. To see which are and which aren't please read the services_list.txt.
 
+Sadly I haven't found a way to autocompile when updating YET, so if you update via ```git pull``` you have to compile the main.c again with this command: ```gcc main.c -o mediacenter -lsqlite3```.
+
 ---
 
 ## 👥 Contributing
