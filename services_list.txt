@@ -1,0 +1,70 @@
+[Streaming & TV]
+- 3sat
+- Amazon Prime Video
+- Apple TV+
+- ARD Mediathek
+- Arte
+- Bilibili
+- CuriosityStream
+- Dailymotion
+- Disney+
+- HBO Max
+- Hotstar
+- iQIYI
+- Joyn
+- Kodi
+- MUBI
+- Nebula
+- Netflix
+- Odysee
+- ORF ON
+- Paramount+
+- Peacock
+- Plex
+- Pluto TV
+- ProSieben
+- Rakuten TV
+- RTL+
+- Rumble
+- Sat.1
+- ServusTV On
+- Shudder
+- Stremio
+- Tencent Video
+- Vimeo
+- VOX
+- Voot
+- WeTV
+- YouTube
+- YouTube TV
+- ZDF Mediathek
+- ZEE5
+
+[Musik & Audio]
+- Amazon Music
+- Apple Music
+- Audacy
+- Bandcamp
+- Deezer
+- iHeartRadio
+- Napster
+- Pandora
+- Qobuz
+- radio.net
+- SoundCloud
+- Spotify
+- Tidal
+- TuneIn
+- YouTube Music
+
+[Live-Streaming & Gaming]
+- Kick
+- Twitch
+
+[Sport]
+- DAZN
+- ESPN+
+- F1 TV
+- NBA League Pass
+- NFL+
+- Sky X

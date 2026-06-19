@@ -64,8 +64,13 @@ int main(int argc, char *argv[]){
 
         printf("starting the server on http://localhost:8080 ...\n");
         printf("to end the server press ctrl + c\n\n");
-
+    
         system("konsole -e python3 -m http.server 8080 &");
+
+    } else if (argc == 2 && strcmp(argv[1], "--compile")){
+
+        system("gcc main.c -o mediacenter -lsqlite3");
+        system("sudo gcc main.c -o /usr/local/bin/mediacenter -lsqlite3");
 
     }else if(argc == 3 && strcmp(argv[1], "--enable") == 0){       //enable service from databank
         sqlite3_stmt *stmt;
@@ -101,7 +106,7 @@ int main(int argc, char *argv[]){
 
         char formatted_url[512];
 
-        if(strncmp(argv[4], "https://", 7) || strncmp(argv[4], "https://", 8)){
+        if(strncmp(argv[3], "https://", 7) || strncmp(argv[3], "https://", 8)){
             snprintf(formatted_url, sizeof(formatted_url), "%s", argv[4]);
         } else {
             snprintf(formatted_url, sizeof(formatted_url), "https://%s", argv[4]);
@@ -124,9 +129,9 @@ int main(int argc, char *argv[]){
         printf("--Command not found--\n\n");
         printf("mediacenter --add [Name] [URL] [Logo]   //create and use a new service of your own\n");
         printf("mediacenter --enable [Name] //use a service from the databank\n");
-        printf("mediacenter --services  //view your used services");
-        printf("mediacenter --update    //update the services.json");
-        printf("mediacenter --start //start the localhost mediacenter server with port 8080 and update the services.json");
+        printf("mediacenter --services  //view your used services\n");
+        printf("mediacenter --update    //update the services.json\n");
+        printf("mediacenter --start //start the localhost mediacenter server with port 8080 and update the services.json\n");
 
         sqlite3_close(db);
         return 1;
