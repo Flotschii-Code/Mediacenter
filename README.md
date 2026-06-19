@@ -84,5 +84,3 @@ Contributions are welcome! Please feel free to submit a Pull Request. Here is th
 *Please follow the existing code style and include tests for new behavior where applicable.*
 
 ---
-
-## 📄 License
