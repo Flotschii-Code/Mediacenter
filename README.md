@@ -54,6 +54,8 @@ mediacenter --update
 mediacenter --start
 ```
 
+There are allready 66 services avialible by default. To see which are and which aren't please read the services_list.txt.
+
 ---
 
 ## 👥 Contributing
