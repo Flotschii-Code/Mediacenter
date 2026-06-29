@@ -3,7 +3,7 @@
 #include <sqlite3.h>
 #include <string.h>
 
-void write_json_file(sqlite3 *db);
+void write_json_file(sqlite3 *db);      //updates the services.json with the new configuration of enabled services
 
 int main(int argc, char *argv[]){
     sqlite3 *db;
@@ -12,13 +12,13 @@ int main(int argc, char *argv[]){
 
     reco = sqlite3_open("media.db", &db);
         if(reco != SQLITE_OK){
-            fprintf(stderr, "Fehler: kann DB nicht öffnen: %s\n", sqlite3_errmsg(db));
+            fprintf(stderr, "Fehler: kann DB nicht öffnen: %s\n", sqlite3_errmsg(db));      //opening the sqlite file
             return 1;
         }
 
     const char *sql_create =
         "CREATE TABLE IF NOT EXISTS services("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "id INTEGER PRIMARY KEY AUTOINCREMENT,"         //creating table if it doesn't allready exist
         "name TEXT NOT NULL UNIQUE,"
         "url TEXT NOT NULL,"
         "logo_path TEXT,"
@@ -26,12 +26,12 @@ int main(int argc, char *argv[]){
 
         rc = sqlite3_exec(db, sql_create, 0, 0, &err_msg);
 
-    if(argc == 2 && strcmp(argv[1], "--services") == 0){      
+    if(argc == 2 && strcmp(argv[1], "--services") == 0){        //list enabled services
         printf("Active Services:\n");
         
         sqlite3_stmt *stmt;
 
-        const char *sql_search = "SELECT name FROM services WHERE is_active = 1;";
+        const char *sql_search = "SELECT name FROM services WHERE is_active = 1;";      //selecting enabled services
 
         if(sqlite3_prepare_v2(db, sql_search, -1, &stmt, 0) != SQLITE_OK){
             fprintf(stderr, "error while ennabling: %s\n", sqlite3_errmsg(db));
@@ -65,12 +65,21 @@ int main(int argc, char *argv[]){
         printf("starting the server on http://localhost:8080 ...\n");
         printf("to end the server press ctrl + c\n\n");
     
-        system("konsole -e python3 -m http.server 8080 &");
+        system("python3 -m http.server 8080 -d \"$PWD\" &");
 
-    } else if (argc == 2 && strcmp(argv[1], "--compile")){
+    } else if (argc == 2 && strcmp(argv[1], "--compile") == 0){
 
         system("gcc main.c -o mediacenter -lsqlite3");
         system("sudo gcc main.c -o /usr/local/bin/mediacenter -lsqlite3");
+
+    } else if(argc == 2 && strcmp(argv[1], "--setup") == 0){
+
+        printf("starting automatic setup...\n");
+        printf("please enter your password if asked!\n\n");
+
+        system("sudo apt update && sudo apt install -y build-essential sqlite3 libsqlite3-dev python3 python3-full");   //installs everything needed to use the programm
+
+        printf("setup is completed!");
 
     }else if(argc == 3 && strcmp(argv[1], "--enable") == 0){       //enable service from databank
         sqlite3_stmt *stmt;
