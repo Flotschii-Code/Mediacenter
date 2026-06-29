@@ -15,9 +15,10 @@ Mediacenter is a self-hosted website tool designed to help you set up and run a 
 - Setting up a private media server on a home computer to host local content via a web interface.
 - Using a CLI utility to configure and manage a locally hosted media application.
 
+
 ---
 
-## ⚡ Installation & Setup
+## ⚡ Installation & Setupa
 
 ### 1. Clone the repository
 ```bash
@@ -25,11 +26,17 @@ git clone https://github.com/Flotschii-Code/Mediacenter.git
 cd Mediacenter
 ```
 
-### 2. Make commands global (Optional)
-By default, you can run the CLI tool using `./mediacenter`. To make the `mediacenter` commands available globally from any directory, copy the binary to `/usr/local/bin/`:
+### 2. Run the setup command 
 ```bash
-sudo cp mediacenter /usr/local/bin/
+./mediacenter --setup
 ```
+
+### 4. Compile the programm once
+```bash
+./mediacenter --compile
+```
+
+Note: After configuration, you can use either ./mediacenter --... or simply mediacenter --.... However, please ensure you are always inside the Mediacenter root directory when executing these commands.
 
 ---
 
@@ -52,6 +59,12 @@ mediacenter --update
 
 # Start the localhost mediacenter server on port 8080 and update services.json
 mediacenter --start
+
+# Compile every time after you downloaded the newest version from github or modified anything
+mediacenter --compile
+
+# Installs every needed package and library 
+mediacenter --setup
 ```
 
 There are allready 66 services avialible by default. To see which are and which aren't please read the services_list.txt.
