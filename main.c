@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
         printf("starting the server on http://localhost:8080 ...\n");
         printf("to end the server press ctrl + c\n\n");
     
-        system("sudo fuser -k 8080/tcp");
+        system("fuser -k 8080/tcp");   
         system("python3 -m http.server 8080 -d \"$PWD\" &");
 
     } else if (argc == 2 && strcmp(argv[1], "--compile") == 0){
